@@ -724,9 +724,18 @@ class EasyBib_Form_Decorator
         'bootstrap' => array(
             'ViewHelper',
             array(
-                'HtmlTag',
+                array('wrapperAll' => 'HtmlTag'),
                 array(
-                    'closeOnly' => false
+                    'tag' => 'div',
+                    'class' => 'col-sm-offset-2 col-sm-10'
+                )
+            ),
+            array(
+                array(
+                    'wrapperField' => 'HtmlTag'
+                ),
+                array(
+                    'tag' => 'div', 'class' => 'form-group'
                 )
             )
         ),
@@ -1074,7 +1083,9 @@ class EasyBib_Form_Decorator
                 }
 
                 if ($form->getElement($cancel_str) && self::BOOTSTRAP == $format) {
-                    $form->getElement($submit_str)->getDecorator('HtmlTag')
+                    $form->getElement($submit_str)->getDecorator('wrapperAll')
+                        ->setOption('openOnly', true);
+                    $form->getElement($submit_str)->getDecorator('wrapperField')
                         ->setOption('openOnly', true);
                 }
             }
@@ -1109,7 +1120,9 @@ class EasyBib_Form_Decorator
                     ->setAttrib('class', $attribs)
                     ->setAttrib('type', 'reset');
                 if ($form->getElement($submit_str) && self::BOOTSTRAP == $format) {
-                    $form->getElement($cancel_str)->getDecorator('HtmlTag')
+                    $form->getElement($cancel_str)->getDecorator('wrapperAll')
+                        ->setOption('closeOnly', true);
+                    $form->getElement($cancel_str)->getDecorator('wrapperField')
                         ->setOption('closeOnly', true);
                 }
             }
