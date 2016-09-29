@@ -16,7 +16,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "http://github.com/easybib/zf1"
+            "url": "https://github.com/easybib/zf1"
         }
     ],
     "autoload": {

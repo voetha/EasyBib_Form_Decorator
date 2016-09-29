@@ -604,13 +604,13 @@ class EasyBib_Form_Decorator
             array(
                 'BootstrapTag',
                 array(
-                    'class' => ' col-sm-10'
+                    'class' => 'col-sm-10'
                 )
             ),
             array(
                 'Label',
                 array(
-                    'class' => 'control-label  col-sm-2'
+                    'class' => 'control-label col-sm-2'
                 )
             ),
             array(

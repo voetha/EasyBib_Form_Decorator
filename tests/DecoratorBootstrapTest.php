@@ -51,7 +51,7 @@ class DecoratorBootstrapTest extends PHPUnit_Framework_TestCase
     {
         $decorators = $this->form->getElement('radio')->getDecorators();
         $this->bootstrapAssertions($decorators);
-        $this->assertSame('radio', $this->form->getElement('radio')->getAttrib('label_class'));
+        $this->assertSame(null, $this->form->getElement('radio')->getAttrib('label_class'));
         $this->assertSame('', $this->form->getElement('radio')->getSeparator());
     }
 
@@ -59,7 +59,7 @@ class DecoratorBootstrapTest extends PHPUnit_Framework_TestCase
     {
         $decorators = $this->form->getElement('multi')->getDecorators();
         $this->bootstrapAssertions($decorators);
-        $this->assertSame('checkbox', $this->form->getElement('multi')->getAttrib('label_class'));
+        $this->assertSame(null, $this->form->getElement('multi')->getAttrib('label_class'));
         $this->assertSame('', $this->form->getElement('radio')->getSeparator());
     }
 
@@ -90,22 +90,27 @@ class DecoratorBootstrapTest extends PHPUnit_Framework_TestCase
     public function testSubmitElement()
     {
         $decorators = $this->form->getElement('submit')->getDecorators();
-        $this->assertEquals(2, count($decorators));
+        $this->assertEquals(3, count($decorators));
         $this->assertArrayHasKey('Zend_Form_Decorator_ViewHelper', $decorators);
-        $this->assertArrayHasKey('Zend_Form_Decorator_HtmlTag', $decorators);
-        $this->assertSame('form-actions', $decorators['Zend_Form_Decorator_HtmlTag']->getOption('class'));
+        $this->assertArrayHasKey('wrapperField', $decorators);
+        $this->assertArrayHasKey('wrapperAll', $decorators);
+        $this->assertSame('col-sm-offset-2 col-sm-10', $decorators['wrapperAll']->getOption('class'));
+        $this->assertSame('form-group', $decorators['wrapperField']->getOption('class'));
         $this->assertSame(array('btn', 'btn-primary'), $this->form->getElement('submit')->getAttrib('class'));
-        $this->assertTrue($this->form->getElement('submit')->getDecorator('HtmlTag')->getOption('openOnly'));
+        $this->assertTrue($this->form->getElement('submit')->getDecorator('wrapperAll')->getOption('openOnly'));
+        $this->assertTrue($this->form->getElement('submit')->getDecorator('wrapperField')->getOption('openOnly'));
     }
 
     public function testCancelElement()
     {
         $decorators = $this->form->getElement('cancel')->getDecorators();
-        $this->assertEquals(2, count($decorators));
+        $this->assertEquals(3, count($decorators));
         $this->assertArrayHasKey('Zend_Form_Decorator_ViewHelper', $decorators);
-        $this->assertArrayHasKey('Zend_Form_Decorator_HtmlTag', $decorators);
+        $this->assertArrayHasKey('wrapperField', $decorators);
+        $this->assertArrayHasKey('wrapperAll', $decorators);
         $this->assertSame(array('btn'), $this->form->getElement('cancel')->getAttrib('class'));
-        $this->assertTrue($this->form->getElement('cancel')->getDecorator('HtmlTag')->getOption('closeOnly'));
+        $this->assertTrue($this->form->getElement('cancel')->getDecorator('wrapperAll')->getOption('closeOnly'));
+        $this->assertTrue($this->form->getElement('cancel')->getDecorator('wrapperField')->getOption('closeOnly'));
     }
 
     public function testFormElement()
@@ -135,9 +140,9 @@ class DecoratorBootstrapTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('Zend_Form_Decorator_ViewHelper', $decorators);
         }
 
-        $this->assertSame('control-group', $decorators['Zend_Form_Decorator_HtmlTag']->getOption('class'));
-        $this->assertSame('controls', $decorators['EasyBib_Form_Decorator_BootstrapTag']->getOption('class'));
-        $this->assertSame('control-label', $decorators['Zend_Form_Decorator_Label']->getOption('class'));
+        $this->assertSame('form-group', $decorators['Zend_Form_Decorator_HtmlTag']->getOption('class'));
+        $this->assertSame('col-sm-10', $decorators['EasyBib_Form_Decorator_BootstrapTag']->getOption('class'));
+        $this->assertSame('control-label col-sm-2', $decorators['Zend_Form_Decorator_Label']->getOption('class'));
         $this->assertSame('p', $decorators['Zend_Form_Decorator_Description']->getOption('tag'));
         $this->assertSame('help-block', $decorators['Zend_Form_Decorator_Description']->getOption('class'));
     }
